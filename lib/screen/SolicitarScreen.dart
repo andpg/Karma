@@ -67,17 +67,15 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
           children: <Widget>[
 
             Container(
-              padding: const EdgeInsets.fromLTRB(40, 40, 40, 20),
+              padding: const EdgeInsets.fromLTRB(40, 40, 20, 20),
               alignment: Alignment(1.0,-1.0),
               child: FlatButton(
                 color: Colors.white,
                 child: Text(
-                  "<",
+                  "Back",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 30)
+                    color: Colors.black)
                   ),
                
                 onPressed: () {          
@@ -177,7 +175,6 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                   "SOLICITAR",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontSize: 18)
                   ),
