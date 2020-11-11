@@ -67,7 +67,7 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
           children: <Widget>[
 
             Container(
-              padding: const EdgeInsets.all(40),
+              padding: const EdgeInsets.fromLTRB(40, 40, 40, 20),
               alignment: Alignment(1.0,-1.0),
               child: FlatButton(
                 color: Colors.white,
@@ -77,7 +77,7 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                    fontSize: 25)
+                    fontSize: 30)
                   ),
                
                 onPressed: () {          
@@ -85,8 +85,8 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
               )
             ),
 
-            Expanded(child:Container(
-              padding: const EdgeInsets.all(50),
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 20, 40, 40),
               alignment: Alignment(0.0,0.0),
               child: Text(
                 '¿Que favor necesitas?',
@@ -94,16 +94,21 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 25),
+                  fontSize: 30),
               ),
-            ),),
+            ),
 
-            Expanded(child:Container(
+            Container(
+              
+              padding: const EdgeInsets.fromLTRB(100, 0, 20, 0),
               child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.center,
+                
                 children:<Widget>[
-
+                  
                   //https://www.youtube.com/watch?v=r5p-zhsrKUg&ab_channel=MobileProgrammer
-                  RadioListTile(value: 0,
+                  RadioListTile(
+                    value: 1,
                     groupValue: 1,
                     title: Text("Sacar Fotocopias"),
                     onChanged: (val) {
@@ -113,7 +118,7 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
 
                   RadioListTile(value: 0,
                     groupValue: 1,
-                    title: Text("Comprar en K%"),
+                    title: Text("Comprar en K5"),
                     onChanged: (val) {
                       
                     },
@@ -134,15 +139,37 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                       
                     },
                     ),
-                  
 
                 ]
               )
-            ) 
+             
             ),
 
-            Expanded(child:Container(
-              padding: const EdgeInsets.all(50),
+            Expanded(child: Container(child:Column(children: <Widget>[
+              Container(
+              padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
+              child: TextFormField( //https://flutter.dev/docs/cookbook/forms/text-input
+                decoration: InputDecoration(
+                  labelText: "Lugar de entrega"
+                ),
+              ),
+              ),
+
+              Container(
+                padding: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+                child: TextFormField( 
+                  decoration: InputDecoration(
+                    labelText: "Detalles adicionales"
+                  ),
+                ),
+              ),
+            ],))),
+            
+            
+
+
+            Container(
+              padding: const EdgeInsets.fromLTRB(60, 0, 60, 40),
               alignment: Alignment(0.0,0.6),
               child: FlatButton(
                 color: Colors.white,
@@ -158,7 +185,7 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                 onPressed: () {          
                 }
               )
-            ))
+            )
           ],
         ),
       ),
