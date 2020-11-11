@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:Karma/screen/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   // MyHomePage({Key key, this.title}) : super(key: key);
@@ -93,7 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 18)
                   ),
                
-                onPressed: () {          
+                onPressed: () { 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );         
                 }
               )
             ))

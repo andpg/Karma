@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screen/LoginScreen.dart';
+import 'screen/ChatScreen.dart';
+import 'screen/SolicitarScreen.dart';
 
 void main() {
   runApp(App());
@@ -18,6 +20,8 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginScreen(),
+      //home: ChatScreen(),
+      //home: SolicitarScreen(),
     );
   }
 }
