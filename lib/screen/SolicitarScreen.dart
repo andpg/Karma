@@ -67,20 +67,14 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
           children: <Widget>[
 
             Container(
-              padding: const EdgeInsets.fromLTRB(40, 40, 20, 20),
+              padding: const EdgeInsets.fromLTRB(40, 40, 15, 20),
               alignment: Alignment(1.0,-1.0),
-              child: FlatButton(
-                color: Colors.white,
-                child: Text(
-                  "Back",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black)
-                  ),
-               
-                onPressed: () {          
-                }
-              )
+              child:FloatingActionButton(
+                backgroundColor: Colors.blue,
+                onPressed: _incrementCounter,
+                tooltip: 'Increment',
+                child: Icon(Icons.arrow_back),
+              ), 
             ),
 
             Container(

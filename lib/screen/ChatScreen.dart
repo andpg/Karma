@@ -40,15 +40,11 @@ class _ChatScreenState extends State<ChatScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        // title: Text(widget.title),
-        title: Text("Flutter Demo Home Page"),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage("images/bluedeg.jpg"), fit: BoxFit.cover) //agrefar en pubspec.yaml
+        ),
         child: Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
@@ -66,20 +62,46 @@ class _ChatScreenState extends State<ChatScreen> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+
+
+
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 40, 15, 20),
+              alignment: Alignment(1.0,-1.0),
+              child:FloatingActionButton(
+                backgroundColor: Colors.blue,
+                onPressed: _incrementCounter,
+                tooltip: 'Increment',
+                child: Icon(Icons.arrow_back),
+              ), 
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            
+
+
+            Expanded(child: Container(child:Column(children: <Widget>[
+              
+
+            ],))),
+
+            Container(
+              padding: const EdgeInsets.fromLTRB(40, 20, 90, 20),
+              child: TextFormField( //https://flutter.dev/docs/cookbook/forms/text-input
+                decoration: InputDecoration(
+                  labelText: "Escribe aquí tu mensaje!"
+                ),
+              ),
+              ),
+
           ],
         ),
       ),
+
+
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.send),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
