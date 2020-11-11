@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'screen/LoginScreen.dart';
-import 'screen/ChatScreen.dart';
-import 'screen/SolicitarScreen.dart';
 
 void main() {
   runApp(App());
@@ -14,14 +12,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Karma',
       theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.red[800],
-        accentColor: Colors.red,
+        primaryColor: Colors.blue[800],
+        accentColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginScreen(),
-      //home: ChatScreen(),
-      //home: SolicitarScreen(),
     );
   }
 }
