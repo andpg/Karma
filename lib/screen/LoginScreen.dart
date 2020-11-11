@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  int _counter = 0;
+  
 
   void _incrementCounter() {
     setState(() {
@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      
     });
   }
 
@@ -40,13 +40,12 @@ class _LoginScreenState extends State<LoginScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        // title: Text(widget.title),
-        title: Text("Flutter Demo Home Page"),
-      ),
-      body: Center(
+      
+      
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage("images/bumeran2.jpg"), fit: BoxFit.cover) //agrefar en pubspec.yaml
+        ),
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
@@ -66,21 +65,45 @@ class _LoginScreenState extends State<LoginScreen> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            
+            Expanded(child:Container(
+              padding: const EdgeInsets.all(50),
+              alignment: Alignment(0.0,-0.7),
+              child: Text(
+                '¡Bienvenido a Karma!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 25),
+              ),
+            ),),
+
+            Expanded(child:Container(
+              padding: const EdgeInsets.all(50),
+              alignment: Alignment(0.0,0.6),
+              child: FlatButton(
+                color: Colors.white,
+                child: Text(
+                  "ENTRA CON GOOGLE",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 18)
+                  ),
+               
+                onPressed: () {          
+                }
+              )
+            ))
+
+            
+            
+          
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
