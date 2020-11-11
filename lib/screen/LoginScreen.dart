@@ -80,16 +80,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),),
 
             Expanded(child:Container(
-              padding: const EdgeInsets.all(50),
-              alignment: Alignment(0.0,0.6),
+              padding: const EdgeInsets.all(30),
+              alignment: Alignment(0.0,0.7),
               child: FlatButton(
-                color: Colors.white,
+                color: Colors.blueAccent,
                 child: Text(
                   "ENTRA CON GOOGLE",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 18)
                   ),
                
