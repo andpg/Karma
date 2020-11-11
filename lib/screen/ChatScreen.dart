@@ -79,7 +79,32 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
             Expanded(child: Container(child:Column(children: <Widget>[
+
+              Container(
+              padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
+              alignment: Alignment(-1.0,0.0),
+              child: Text(
+                'Hola, ya voy en camino',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey,
+                  fontSize: 20),
+              ),
+              ),
               
+              Container(
+              padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
+              alignment: Alignment(1.0,0.0),
+              child: Text(
+                'Ok, te espero pronto. Gracias!',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 20),
+              ),
+              ),
 
             ],))),
 
