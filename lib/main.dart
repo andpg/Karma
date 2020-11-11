@@ -13,7 +13,8 @@ class App extends StatelessWidget {
       title: 'Karma',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.purple,
+        primaryColor: Colors.red[800],
+        accentColor: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginScreen(),
