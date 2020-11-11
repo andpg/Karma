@@ -12,7 +12,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Karma',
       theme: ThemeData(
-        primaryColor: Colors.blue[800],
+        primaryColor: Colors.lightBlue,
         accentColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

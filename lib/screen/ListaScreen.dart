@@ -18,17 +18,29 @@ class ListaScreen extends StatefulWidget {
 }
 
 class _ListaScreenState extends State<ListaScreen> {
-  String _filtro = "";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Color(0x00000000),
           title: Text("Favores por hacer"),
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.filter_list))
+            IconButton(
+              onPressed: () {},
+              tooltip: 'Filtrar',
+              icon: Icon(Icons.filter_list),
+            )
           ],
         ),
-        body: Container());
+        body: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("images/bluedeg.jpg"),
+                    fit: BoxFit.cover)),
+            child: SafeArea(
+              child: Container(),
+            )));
   }
 }
