@@ -41,28 +41,28 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                           RadioListTile(
                             value: 1,
                             groupValue: 1,
-                            title: Text("Sacar Fotocopias"),
+                            title: Text("Sacar fotocopias"),
                             onChanged: (val) {},
                           ),
 
                           RadioListTile(
                             value: 0,
                             groupValue: 1,
-                            title: Text("Comprar en K5"),
+                            title: Text("Comprar en KM5"),
                             onChanged: (val) {},
                           ),
 
                           RadioListTile(
                             value: 0,
                             groupValue: 1,
-                            title: Text("Buscar Domicilio En Puerta 7"),
+                            title: Text("Buscar domicilio en Puerta 7"),
                             onChanged: (val) {},
                           ),
 
                           RadioListTile(
                             value: 0,
                             groupValue: 1,
-                            title: Text("Favor Especial"),
+                            title: Text("Favor especial"),
                             onChanged: (val) {},
                           ),
                         ])),
@@ -90,8 +90,8 @@ class _SolicitarScreenState extends State<SolicitarScreen> {
                 Container(
                     padding: const EdgeInsets.fromLTRB(60, 0, 60, 40),
                     alignment: Alignment(0.0, 0.6),
-                    child: FlatButton(
-                        color: Colors.white,
+                    child: MaterialButton(
+                        color: Colors.blue,
                         child: Text("SOLICITAR",
                             textAlign: TextAlign.center,
                             style:

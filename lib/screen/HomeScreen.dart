@@ -129,10 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: EdgeInsets.all(5),
                                       child: Row(
                                         children: [
-                                          Text('Categoría: ',
+                                          Text('Comprar en KM5',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text('Ejemplo')
                                         ],
                                       ),
                                     ),
@@ -143,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Text('Lugar: ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text('Ejemplo')
+                                          Text('Biblioteca')
                                         ],
                                       ),
                                     ),
@@ -154,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Text('Estado: ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text('Ejemplo')
+                                          Text('Asignado')
                                         ],
                                       ),
                                     ),
@@ -165,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Text('Detalles: ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          Text('Ejemplo')
+                                          Text('Trae BORRADORES')
                                         ],
                                       ),
                                     ),

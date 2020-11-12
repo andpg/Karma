@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ListaScreen extends StatefulWidget {
-  // MyHomePage({Key key, this.title}) : super(key: key);
-  // final String title;
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   _ListaScreenState createState() => _ListaScreenState();
 }
 
+class Favor {
+  String categoria;
+  String lugar;
+  String usuario;
+  Favor(this.categoria, this.lugar, this.usuario);
+}
+
 class _ListaScreenState extends State<ListaScreen> {
+  var _favores = <Favor>[
+    Favor("Sacar fotocopias", "5K", "Celia Cruz"),
+    Favor("Favor especial", "Cancha de Tenis", "Ruben Blades"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +35,38 @@ class _ListaScreenState extends State<ListaScreen> {
           ],
         ),
         body: Container(
+            padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("images/bluedeg.jpg"),
                     fit: BoxFit.cover)),
             child: SafeArea(
-              child: Container(),
+              child: Container(
+                  child: ListView(
+                      children: ListTile.divideTiles(
+                context: context,
+                tiles: _favores
+                    .map((fav) => ListTile(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        contentPadding: EdgeInsets.all(10),
+                        title: Text('${fav.categoria}',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Column(children: [
+                          Row(children: [
+                            Text('Lugar: ',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text('${fav.lugar}'),
+                          ]),
+                          Row(children: [
+                            Text('Lo pide: ',
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text('${fav.usuario}'),
+                          ]),
+                        ])))
+                    .toList(),
+              ).toList())),
             )));
   }
 }
