@@ -10,7 +10,17 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+class Movimiento {
+  int karma = 2;
+  String categoria = "Ejemplo";
+}
+
 class _HomeScreenState extends State<HomeScreen> {
+  var _movimientos = <Movimiento>[
+    Movimiento(),
+    Movimiento(),
+    Movimiento(),
+  ];
   int _puntos = 2;
   bool _existeFavor = false;
 
@@ -33,49 +43,168 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Container(
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("images/bluedeg.jpg"), fit: BoxFit.cover)),
           child: SafeArea(
             child: Column(
               children: <Widget>[
-                Center(
+                Expanded(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Tus puntos de Karma:',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                       Text(
                         '$_puntos',
-                        style: Theme.of(context).textTheme.headline4,
+                        style: TextStyle(color: Colors.black, fontSize: 56),
                       ),
                     ],
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text("Últimos movimientos",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 18)),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                      children: _movimientos
+                          .map((mov) => Row(children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text("+${mov.karma}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 18)),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(mov.categoria,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18)),
+                                ),
+                              ]))
+                          .toList()),
+                ),
+                Container(
                     child: _existeFavor
-                        ? Row(children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('Categoría'),
-                                Text('Lugar'),
-                                Text('Estado'),
-                                Text('Detalles')
+                        ? Container(
+                            decoration: new BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
                               ],
                             ),
-                            IconButton(
+                            padding: EdgeInsets.all(10),
+                            child: Column(children: [
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                child: Text("Favor en proceso",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 16)),
+                              ),
+                              Row(children: <Widget>[
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Categoría: ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text('Ejemplo')
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Lugar: ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text('Ejemplo')
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Estado: ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text('Ejemplo')
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Detalles: ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text('Ejemplo')
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChatScreen()));
+                                    },
+                                    tooltip: 'Chat',
+                                    icon: Icon(Icons.chat))
+                              ])
+                            ]))
+                        : Row(children: [
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: MaterialButton(
+                                color: Colors.blue,
                                 onPressed: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ChatScreen()));
+                                          builder: (context) => ListaScreen()));
                                 },
-                                tooltip: 'Chat',
-                                icon: Icon(Icons.chat))
-                          ])
-                        : Row(children: [
-                            MaterialButton(
+                                child: Text('Hacer favores',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18)),
+                              ),
+                            )),
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: MaterialButton(
+                                color: Colors.blue,
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -83,26 +212,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                           builder: (context) =>
                                               SolicitarScreen()));
                                 },
-                                child: Text('Pedir favor')),
-                            MaterialButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ListaScreen()));
-                                },
-                                child: Text('Hacer favor'))
+                                child: Text('Solicitar favor',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18)),
+                              ),
+                            )),
                           ])),
                 Container(
                     child: MaterialButton(
-                        onPressed: () {
-                          setState(() {
-                            _existeFavor = !_existeFavor;
-                          });
-                        },
-                        child: _existeFavor
-                            ? Text('Asumir que no hay favor en proceso')
-                            : Text('Asumir que hay favor en proceso')))
+                  onPressed: () {
+                    setState(() {
+                      _existeFavor = !_existeFavor;
+                    });
+                  },
+                  child: _existeFavor
+                      ? Text('Mostrar pantalla cuando no hay favor en proceso')
+                      : Text('Mostrar pantalla cuando hay favor en proceso'),
+                ))
               ],
             ),
           )),
