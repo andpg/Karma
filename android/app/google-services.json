@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "824808760701",
+    "firebase_url": "https://movil-8ae96.firebaseio.com",
+    "project_id": "movil-8ae96",
+    "storage_bucket": "movil-8ae96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824808760701:android:7d0491822f972d4bf61814",
+        "android_client_info": {
+          "package_name": "com.example.Karma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824808760701-0u4al2c1gk63le4on9eov22clrq7pf15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDenRKflEuVvDpQcm3-9Eq5-sKWbJMGHJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824808760701-0u4al2c1gk63le4on9eov22clrq7pf15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
