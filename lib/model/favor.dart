@@ -13,16 +13,16 @@ class Favor {
   bool confirmado;
   int horaCompletado;
 
-  Favor(
-      this.id,
-      this.categoria,
-      this.detalle,
-      this.estado,
-      this.lugar,
-      this.user,
-      this.userAsignado,
-      this.mensajes,
-      this.completado,
-      this.confirmado,
-      this.horaCompletado);
+  Favor(Map json)
+      : id = json["id"],
+        categoria = json["categoria"],
+        detalle = json["detalle"],
+        estado = json["estado"],
+        lugar = json["lugar"],
+        user = User(json["user"]),
+        userAsignado = User(json["userAsignado"]),
+        mensajes = json["mensajes"],
+        completado = json["completado"],
+        confirmado = json["confirmado"],
+        horaCompletado = json["horaCompletado"];
 }

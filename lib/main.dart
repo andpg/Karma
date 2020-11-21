@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:Karma/auth.dart';
 import 'screen/LoginScreen.dart';
 
 void main() {
-  runApp(App());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => AuthProvider()),
+    ],
+    child: App(),
+  ));
 }
 
 class App extends StatelessWidget {

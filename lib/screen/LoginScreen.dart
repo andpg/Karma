@@ -1,16 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:Karma/screen/HomeScreen.dart';
 import 'package:Karma/auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  FirebaseUser user;
-
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,16 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             style:
                                 TextStyle(color: Colors.white, fontSize: 18)),
                         onPressed: () {
-                          signInWithGoogle().then((user) => {
-                            this.user = user,
-
-                            Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()),
-                           )
-
-                          }); 
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .signInWithGoogle()
+                              .then((success) => {
+                                    if (success)
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomeScreen()),
+                                      )
+                                  });
                         })))
           ],
         ),

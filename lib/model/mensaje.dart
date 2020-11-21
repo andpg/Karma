@@ -6,5 +6,9 @@ class Mensaje {
   String texto;
   int hora;
 
-  Mensaje(this.id, this.user, this.texto, this.hora);
+  Mensaje(Map json)
+      : id = json["id"],
+        user = User(json["user"]),
+        texto = json["texto"],
+        hora = json["hora"];
 }

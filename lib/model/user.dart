@@ -3,5 +3,8 @@ class User {
   String nombre;
   int karma;
 
-  User(this.uid, this.nombre, this.karma);
+  User(Map json)
+      : uid = json["uid"],
+        nombre = json["nombre"],
+        karma = json["karma"];
 }

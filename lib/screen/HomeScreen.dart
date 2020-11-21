@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:Karma/auth.dart';
 import 'package:Karma/screen/ChatScreen.dart';
 import 'package:Karma/screen/ListaScreen.dart';
 import 'package:Karma/screen/SolicitarScreen.dart';
-import 'package:flutter/material.dart';
 
 import 'LoginScreen.dart';
 
@@ -21,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Movimiento(),
     Movimiento(),
   ];
-  int _puntos = 2;
   bool _existeFavor = false;
 
   @override
@@ -58,10 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Tus puntos de Karma:',
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
-                      Text(
-                        '$_puntos',
-                        style: TextStyle(color: Colors.black, fontSize: 56),
-                      ),
+                      Consumer<AuthProvider>(
+                        builder: (context, provider, child) => Text(
+                          '${provider.currentUser.karma}',
+                          style: TextStyle(color: Colors.black, fontSize: 56),
+                        ),
+                      )
                     ],
                   ),
                 ),
