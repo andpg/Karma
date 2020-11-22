@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Karma/auth.dart';
+import 'package:Karma/providers/auth.dart';
 import 'package:Karma/screen/ChatScreen.dart';
 import 'package:Karma/screen/ListaScreen.dart';
 import 'package:Karma/screen/SolicitarScreen.dart';
@@ -36,8 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Provider.of<AuthProvider>(context, listen: false)
+                    .signOut()
+                    .then((success) {
+                  if (success) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  }
+                });
               },
               tooltip: 'Cerrar sesión',
               icon: Icon(Icons.logout))

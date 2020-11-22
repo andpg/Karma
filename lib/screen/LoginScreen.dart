@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:Karma/screen/HomeScreen.dart';
-import 'package:Karma/auth.dart';
+import 'package:Karma/providers/auth.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -41,14 +41,14 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () {
                           Provider.of<AuthProvider>(context, listen: false)
                               .signInWithGoogle()
-                              .then((success) => {
-                                    if (success)
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomeScreen()),
-                                      )
-                                  });
+                              .then((success) {
+                            if (success) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()));
+                            }
+                          });
                         })))
           ],
         ),

@@ -36,6 +36,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<User> findUserInDatabase(firebaseUser) async {
+    if (firebaseUser == null) return null;
     DataSnapshot data = await db.child("users").child(firebaseUser.uid).once();
     if (data.value == null) {
       await db.child("users").child(firebaseUser.uid).set({
@@ -49,5 +50,14 @@ class AuthProvider extends ChangeNotifier {
     } else {
       return User(Map.from(data.value));
     }
+  }
+
+  Future<bool> signOut() async {
+    await _auth.signOut().then((value) {
+      googleSignIn.disconnect().then((value) {
+        _currentUser = null;
+      });
+    });
+    return _currentUser == null;
   }
 }

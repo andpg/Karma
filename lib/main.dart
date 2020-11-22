@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Karma/auth.dart';
+import 'package:Karma/providers/auth.dart';
 import 'screen/LoginScreen.dart';
 
 void main() {
