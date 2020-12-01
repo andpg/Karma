@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<FavoresProvider>(context, listen: false)
-        .buscarFavores(Provider.of<AuthProvider>(context).currentUser);
+        .buscarFavores(Provider.of<AuthProvider>(context, listen: false).currentUser);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                           (favor.user.uid ==
-                                                  Provider.of<AuthProvider>(context)
+                                                  Provider.of<AuthProvider>(context, listen: false)
                                                       .currentUser
                                                       .uid)
                                               ? "-2"
@@ -129,8 +129,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: MaterialButton(
                             color: Colors.blue,
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => SolicitarScreen()));
+                              if (Provider.of<AuthProvider>(context, listen: false)
+                                      .currentUser
+                                      .karma <
+                                  2) {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                    'Necesitas al menos 2 puntos de Karma para pedir favores.',
+                                  ),
+                                  action: SnackBarAction(
+                                    label: 'X',
+                                    onPressed: Scaffold.of(context).hideCurrentSnackBar,
+                                  ),
+                                ));
+                              } else
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => SolicitarScreen()));
                             },
                             child: Text('Solicitar favor',
                                 style: TextStyle(color: Colors.black, fontSize: 18)),
@@ -171,7 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Provider.of<FavoresProvider>(context,
                                                             listen: false)
                                                         .cancelarFavorEnProceso(
-                                                            Provider.of<AuthProvider>(context)
+                                                            Provider.of<AuthProvider>(context,
+                                                                    listen: false)
                                                                 .currentUser);
                                                   },
                                                   child: Text('Sí')),
@@ -260,7 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Provider.of<FavoresProvider>(context,
                                                                 listen: false)
                                                             .confirmarFavorEnProceso(
-                                                                Provider.of<AuthProvider>(context)
+                                                                Provider.of<AuthProvider>(context,
+                                                                        listen: false)
                                                                     .currentUser);
                                                       },
                                                       child: Text('Sí')),
