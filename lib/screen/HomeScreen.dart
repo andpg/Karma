@@ -1,3 +1,4 @@
+import 'package:Karma/providers/favores.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:Karma/providers/auth.dart';
@@ -12,21 +13,12 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class Movimiento {
-  int karma = 2;
-  String categoria = "Ejemplo";
-}
-
 class _HomeScreenState extends State<HomeScreen> {
-  var _movimientos = <Movimiento>[
-    Movimiento(),
-    Movimiento(),
-    Movimiento(),
-  ];
-  bool _existeFavor = false;
-
   @override
   Widget build(BuildContext context) {
+    Provider.of<FavoresProvider>(context, listen: false)
+        .buscarFavores(Provider.of<AuthProvider>(context).currentUser);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -83,160 +75,163 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 18)),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                      children: _movimientos
-                          .map((mov) => Row(children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text("+${mov.karma}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 18)),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(mov.categoria,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 18)),
-                                ),
-                              ]))
-                          .toList()),
-                ),
+                    padding: EdgeInsets.all(10),
+                    child: Consumer<FavoresProvider>(
+                      builder: (context, provider, child) => Column(
+                          children: provider.favoresHechos
+                              .sublist(0, 3)
+                              .map((favor) => Row(children: [
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                          (favor.user.uid ==
+                                                  Provider.of<AuthProvider>(
+                                                          context)
+                                                      .currentUser
+                                                      .uid)
+                                              ? "-2"
+                                              : "+1",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontSize: 18)),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(favor.categoria,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18)),
+                                    ),
+                                  ]))
+                              .toList()),
+                    )),
                 Container(
-                    child: _existeFavor
-                        ? Container(
-                            decoration: new BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
+                  child: Consumer<FavoresProvider>(
+                      builder: (context, provider, child) {
+                    var favor = provider.favorEnProceso;
+                    if (favor == null)
+                      return Row(children: [
+                        Expanded(
+                            child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: MaterialButton(
+                            color: Colors.blue,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ListaScreen()));
+                            },
+                            child: Text('Hacer favores',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18)),
+                          ),
+                        )),
+                        Expanded(
+                            child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: MaterialButton(
+                            color: Colors.blue,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SolicitarScreen()));
+                            },
+                            child: Text('Solicitar favor',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18)),
+                          ),
+                        )),
+                      ]);
+                    else
+                      return Container(
+                          decoration: new BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Column(children: [
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              child: Text("Favor en proceso",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 16)),
                             ),
-                            padding: EdgeInsets.all(10),
-                            child: Column(children: [
-                              Container(
-                                padding: EdgeInsets.all(5),
-                                child: Text("Favor en proceso",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 16)),
-                              ),
-                              Row(children: <Widget>[
-                                Expanded(
-                                    child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(5),
-                                      child: Row(
-                                        children: [
-                                          Text('Comprar en KM5',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ],
-                                      ),
+                            Row(children: <Widget>[
+                              Expanded(
+                                  child: Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+                                    child: Row(
+                                      children: [
+                                        Text('${favor.categoria}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.all(5),
-                                      child: Row(
-                                        children: [
-                                          Text('Lugar: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text('Biblioteca')
-                                        ],
-                                      ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+                                    child: Row(
+                                      children: [
+                                        Text('Lugar: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text('${favor.lugar}')
+                                      ],
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.all(5),
-                                      child: Row(
-                                        children: [
-                                          Text('Estado: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text('Asignado')
-                                        ],
-                                      ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+                                    child: Row(
+                                      children: [
+                                        Text('Estado: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text('${favor.estado}')
+                                      ],
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.all(5),
-                                      child: Row(
-                                        children: [
-                                          Text('Detalles: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                          Text('Trae BORRADORES')
-                                        ],
-                                      ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+                                    child: Row(
+                                      children: [
+                                        Text('Detalles: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                        Text('${favor.detalle}')
+                                      ],
                                     ),
-                                  ],
-                                )),
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChatScreen()));
-                                    },
-                                    tooltip: 'Chat',
-                                    icon: Icon(Icons.chat))
-                              ])
-                            ]))
-                        : Row(children: [
-                            Expanded(
-                                child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: MaterialButton(
-                                color: Colors.blue,
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ListaScreen()));
-                                },
-                                child: Text('Hacer favores',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18)),
-                              ),
-                            )),
-                            Expanded(
-                                child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: MaterialButton(
-                                color: Colors.blue,
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SolicitarScreen()));
-                                },
-                                child: Text('Solicitar favor',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18)),
-                              ),
-                            )),
-                          ])),
-                Container(
-                    child: MaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      _existeFavor = !_existeFavor;
-                    });
-                  },
-                  child: _existeFavor
-                      ? Text('Mostrar pantalla cuando no hay favor en proceso')
-                      : Text('Mostrar pantalla cuando hay favor en proceso'),
-                ))
+                                  ),
+                                ],
+                              )),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChatScreen()));
+                                  },
+                                  tooltip: 'Chat',
+                                  icon: Icon(Icons.chat))
+                            ])
+                          ]));
+                  }),
+                )
               ],
             ),
           )),
