@@ -28,12 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Provider.of<AuthProvider>(context, listen: false)
-                    .signOut()
-                    .then((success) {
+                Provider.of<AuthProvider>(context, listen: false).signOut().then((success) {
                   if (success) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => LoginScreen()));
                   }
                 });
               },
@@ -44,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("images/bluedeg.jpg"), fit: BoxFit.cover)),
+              image: DecorationImage(image: AssetImage("images/bluedeg.jpg"), fit: BoxFit.cover)),
           child: SafeArea(
             child: Column(
               children: <Widget>[
@@ -70,23 +67,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.all(10),
                   child: Text("Últimos movimientos",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 18)),
+                          fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18)),
                 ),
                 Container(
                     padding: EdgeInsets.all(10),
-                    child: Consumer<FavoresProvider>(
-                      builder: (context, provider, child) => Column(
-                          children: provider.favoresHechos
-                              .sublist(0, 3)
+                    child: Consumer<FavoresProvider>(builder: (context, provider, child) {
+                      List favores = provider.favoresHechos;
+                      if (favores.length < 1)
+                        return Container(
+                          padding: EdgeInsets.all(10),
+                          child: Text('Aun no has completado ningún favor.',
+                              style: TextStyle(color: Colors.black, fontSize: 16)),
+                        );
+                      if (favores.length > 3) favores = favores.sublist(0, 3);
+                      return Column(
+                          children: favores
                               .map((favor) => Row(children: [
                                     Container(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                           (favor.user.uid ==
-                                                  Provider.of<AuthProvider>(
-                                                          context)
+                                                  Provider.of<AuthProvider>(context)
                                                       .currentUser
                                                       .uid)
                                               ? "-2"
@@ -99,16 +100,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       padding: EdgeInsets.all(10),
                                       child: Text(favor.categoria,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18)),
+                                          style: TextStyle(color: Colors.black, fontSize: 18)),
                                     ),
                                   ]))
-                              .toList()),
-                    )),
+                              .toList());
+                    })),
                 Container(
-                  child: Consumer<FavoresProvider>(
-                      builder: (context, provider, child) {
+                  child: Consumer<FavoresProvider>(builder: (context, provider, child) {
                     var favor = provider.favorEnProceso;
                     if (favor == null)
                       return Row(children: [
@@ -119,13 +117,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.blue,
                             onPressed: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ListaScreen()));
+                                  context, MaterialPageRoute(builder: (context) => ListaScreen()));
                             },
                             child: Text('Hacer favores',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18)),
+                                style: TextStyle(color: Colors.black, fontSize: 18)),
                           ),
                         )),
                         Expanded(
@@ -134,14 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: MaterialButton(
                             color: Colors.blue,
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SolicitarScreen()));
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => SolicitarScreen()));
                             },
                             child: Text('Solicitar favor',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18)),
+                                style: TextStyle(color: Colors.black, fontSize: 18)),
                           ),
                         )),
                       ]);
@@ -160,74 +152,144 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           padding: EdgeInsets.all(10),
-                          child: Column(children: [
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              child: Text("Favor en proceso",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 16)),
-                            ),
-                            Row(children: <Widget>[
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Row(
-                                      children: [
-                                        Text('${favor.categoria}',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Row(
-                                      children: [
-                                        Text('Lugar: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text('${favor.lugar}')
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Row(
-                                      children: [
-                                        Text('Estado: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text('${favor.estado}')
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Row(
-                                      children: [
-                                        Text('Detalles: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text('${favor.detalle}')
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              )),
-                              IconButton(
+                          child: Stack(children: [
+                            Positioned(
+                              top: -5.0,
+                              right: -5.0,
+                              child: IconButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ChatScreen()));
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                            content: Text(
+                                              '¿Estas seguro de que quieres cancelar este favor?',
+                                            ),
+                                            actions: [
+                                              MaterialButton(
+                                                  onPressed: () {
+                                                    Provider.of<FavoresProvider>(context,
+                                                            listen: false)
+                                                        .cancelarFavorEnProceso(
+                                                            Provider.of<AuthProvider>(context)
+                                                                .currentUser);
+                                                  },
+                                                  child: Text('Sí')),
+                                              MaterialButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('No')),
+                                            ]);
+                                      },
+                                    );
                                   },
-                                  tooltip: 'Chat',
-                                  icon: Icon(Icons.chat))
+                                  tooltip: 'Cancelar',
+                                  icon: Icon(
+                                    Icons.close,
+                                    size: 20.0,
+                                  )),
+                            ),
+                            Column(children: [
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                child: Text("Favor en proceso",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 18)),
+                              ),
+                              Row(children: <Widget>[
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('${favor.categoria}',
+                                              style: TextStyle(fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Lugar: ',
+                                              style: TextStyle(fontWeight: FontWeight.bold)),
+                                          Text('${favor.lugar}')
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Estado: ',
+                                              style: TextStyle(fontWeight: FontWeight.bold)),
+                                          Text('${favor.estado}')
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      child: Row(
+                                        children: [
+                                          Text('Detalles: ',
+                                              style: TextStyle(fontWeight: FontWeight.bold)),
+                                          Text('${favor.detalle}')
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                                Column(children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                content: Text(
+                                                  '¿Estas seguro de que quieres marcar este favor como completado?',
+                                                ),
+                                                actions: [
+                                                  MaterialButton(
+                                                      onPressed: () {
+                                                        Provider.of<FavoresProvider>(context,
+                                                                listen: false)
+                                                            .confirmarFavorEnProceso(
+                                                                Provider.of<AuthProvider>(context)
+                                                                    .currentUser);
+                                                      },
+                                                      child: Text('Sí')),
+                                                  MaterialButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                      child: Text('No')),
+                                                ]);
+                                          },
+                                        );
+                                      },
+                                      tooltip: 'Completar',
+                                      icon: Icon(
+                                        Icons.done_outline,
+                                        size: 30.0,
+                                      )),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => ChatScreen()));
+                                      },
+                                      tooltip: 'Chat',
+                                      icon: Icon(
+                                        Icons.chat_outlined,
+                                        size: 30.0,
+                                      )),
+                                ])
+                              ])
                             ])
                           ]));
                   }),

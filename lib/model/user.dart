@@ -7,4 +7,10 @@ class User {
       : uid = json["uid"],
         nombre = json["nombre"],
         karma = json["karma"];
+
+  Map toJson() => {
+        'uid': uid,
+        'nombre': nombre,
+        'karma': karma,
+      };
 }

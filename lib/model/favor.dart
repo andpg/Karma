@@ -21,12 +21,25 @@ class Favor {
         estado = json["estado"],
         lugar = json["lugar"],
         user = User(json["user"]),
-        userAsignado =
-            json["userAsignado"] == null ? null : User(json["userAsignado"]),
+        userAsignado = json["userAsignado"] == null ? null : User(json["userAsignado"]),
         mensajes = json["mensajes"] == null
             ? new List()
             : (json["mensajes"] as Map).values.map((json) => Mensaje(json)),
         completado = json["completado"],
         confirmado = json["confirmado"],
         horaCompletado = json["horaCompletado"];
+
+  Map toJson() => {
+        'id': id,
+        'categoria': categoria,
+        'detalle': detalle,
+        'estado': estado,
+        'lugar': lugar,
+        'user': user,
+        'userAsignado': userAsignado,
+        'mensajes': mensajes,
+        'completado': completado,
+        'confirmado': confirmado,
+        'horaCompletado': horaCompletado,
+      };
 }

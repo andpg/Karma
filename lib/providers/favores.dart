@@ -21,19 +21,16 @@ class FavoresProvider extends ChangeNotifier {
         for (Map map in favores.values) {
           Favor favor = Favor(map);
           if ((favor.user.uid == user.uid) ||
-              (favor.userAsignado != null &&
-                  favor.userAsignado.uid == user.uid)) {
+              (favor.userAsignado != null && favor.userAsignado.uid == user.uid)) {
             if (favor.estado == "Inicial" || favor.estado == "Asignado") {
               favorEnProceso = favor;
             } else if (favor.estado == "Completo") {
               favoresHechos.add(favor);
-              favoresHechos.sort((Favor f1, Favor f2) =>
-                  f2.horaCompletado - f1.horaCompletado);
+              favoresHechos.sort((Favor f1, Favor f2) => f2.horaCompletado - f1.horaCompletado);
             }
           } else if (favor.user.uid != user.uid && favor.estado == "Inicial") {
             favoresDisponibles.add(favor);
-            favoresDisponibles
-                .sort((Favor f1, Favor f2) => f2.user.karma - f1.user.karma);
+            favoresDisponibles.sort((Favor f1, Favor f2) => f2.user.karma - f1.user.karma);
           }
         }
       }
@@ -43,6 +40,46 @@ class FavoresProvider extends ChangeNotifier {
 
   void solicitarFavor(User user, String lugar, String detalle, String categ) {}
   void asignarFavor(Favor favor, User user) {}
-  void cancelarFavorEnProceso(User user) {}
-  void confirmarFavorEnProceso(User user) {}
+
+  void cancelarFavorEnProceso(User user) {
+    if (favorEnProceso != null) {
+      if (favorEnProceso.user.uid == user.uid) {
+        db.child("favores").child(favorEnProceso.id).set(null);
+      } else if (favorEnProceso.userAsignado != null &&
+          favorEnProceso.userAsignado.uid == user.uid) {
+        favorEnProceso.userAsignado = null;
+        favorEnProceso.estado = "Inicial";
+        db.child("favores").child(favorEnProceso.id).set(favorEnProceso.toJson());
+      }
+    }
+  }
+
+  void confirmarFavorEnProceso(User user) {
+    if (favorEnProceso != null) {
+      if (favorEnProceso.user.uid == user.uid)
+        favorEnProceso.completado = true;
+      else if (favorEnProceso.userAsignado != null && favorEnProceso.userAsignado.uid == user.uid)
+        favorEnProceso.confirmado = true;
+
+      if (favorEnProceso.confirmado && favorEnProceso.completado) {
+        favorEnProceso.estado = "Completo";
+        favorEnProceso.horaCompletado = DateTime.now().millisecondsSinceEpoch;
+        db.child("favores").child(favorEnProceso.id).set(favorEnProceso.toJson());
+
+        db.child("users").child(favorEnProceso.user.uid).once().then((data) {
+          User user = User(Map.from(data.value));
+          user.karma = user.karma - 2;
+          db.child("users").child(user.uid).set(user.toJson());
+        });
+
+        db.child("users").child(favorEnProceso.userAsignado.uid).once().then((data) {
+          User userAsignado = User(Map.from(data.value));
+          userAsignado.karma = userAsignado.karma + 1;
+          db.child("users").child(userAsignado.uid).set(userAsignado.toJson());
+        });
+      } else {
+        db.child("favores").child(favorEnProceso.id).set(favorEnProceso.toJson());
+      }
+    }
+  }
 }
