@@ -22,9 +22,6 @@ class Favor {
         lugar = json["lugar"],
         user = User(json["user"]),
         userAsignado = json["userAsignado"] == null ? null : User(json["userAsignado"]),
-        mensajes = json["mensajes"] == null
-            ? new List()
-            : (json["mensajes"] as Map).values.map((json) => Mensaje(json)),
         completado = json["completado"],
         confirmado = json["confirmado"],
         horaCompletado = json["horaCompletado"];
@@ -37,7 +34,6 @@ class Favor {
         'lugar': lugar,
         'user': user,
         'userAsignado': userAsignado,
-        'mensajes': mensajes,
         'completado': completado,
         'confirmado': confirmado,
         'horaCompletado': horaCompletado,

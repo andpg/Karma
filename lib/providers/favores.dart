@@ -38,18 +38,35 @@ class FavoresProvider extends ChangeNotifier {
     });
   }
 
-  void solicitarFavor(User user, String lugar, String detalle, String categ) {}
-  void asignarFavor(Favor favor, User user) {}
+  void solicitarFavor(User user, String lugar, String detalle, String categ) {
+    String id = db.child("favores").push().key;
+    db.child("favores").child(id).update({
+      "id": id,
+      "categoria": categ,
+      "detalle": detalle,
+      "estado": "Inicial",
+      "lugar": lugar,
+      "user": user.toJson(),
+      "confirmado": false,
+      "completado": false,
+    });
+  }
+
+  void asignarFavor(Favor favor, User user) {
+    favor.userAsignado = user;
+    favor.estado = "Asignado";
+    db.child("favores").child(favor.id).update(favor.toJson());
+  }
 
   void cancelarFavorEnProceso(User user) {
     if (favorEnProceso != null) {
       if (favorEnProceso.user.uid == user.uid) {
-        db.child("favores").child(favorEnProceso.id).set(null);
+        db.child("favores").child(favorEnProceso.id).update(null);
       } else if (favorEnProceso.userAsignado != null &&
           favorEnProceso.userAsignado.uid == user.uid) {
         favorEnProceso.userAsignado = null;
         favorEnProceso.estado = "Inicial";
-        db.child("favores").child(favorEnProceso.id).set(favorEnProceso.toJson());
+        db.child("favores").child(favorEnProceso.id).update(favorEnProceso.toJson());
       }
     }
   }
@@ -64,21 +81,21 @@ class FavoresProvider extends ChangeNotifier {
       if (favorEnProceso.confirmado && favorEnProceso.completado) {
         favorEnProceso.estado = "Completo";
         favorEnProceso.horaCompletado = DateTime.now().millisecondsSinceEpoch;
-        db.child("favores").child(favorEnProceso.id).set(favorEnProceso.toJson());
+        db.child("favores").child(favorEnProceso.id).update(favorEnProceso.toJson());
 
         db.child("users").child(favorEnProceso.user.uid).once().then((data) {
           User user = User(Map.from(data.value));
           user.karma = user.karma - 2;
-          db.child("users").child(user.uid).set(user.toJson());
+          db.child("users").child(user.uid).update(user.toJson());
         });
 
         db.child("users").child(favorEnProceso.userAsignado.uid).once().then((data) {
           User userAsignado = User(Map.from(data.value));
           userAsignado.karma = userAsignado.karma + 1;
-          db.child("users").child(userAsignado.uid).set(userAsignado.toJson());
+          db.child("users").child(userAsignado.uid).update(userAsignado.toJson());
         });
       } else {
-        db.child("favores").child(favorEnProceso.id).set(favorEnProceso.toJson());
+        db.child("favores").child(favorEnProceso.id).update(favorEnProceso.toJson());
       }
     }
   }
