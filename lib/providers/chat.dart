@@ -17,8 +17,8 @@ class ChatProvider extends ChangeNotifier {
           mensajes.add(Mensaje(json));
         }
       }
+      notifyListeners();
     });
-    notifyListeners();
   }
 
   void enviarMensaje(String idFavor, User user, String texto) {
