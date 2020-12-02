@@ -90,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Provider.of<AuthProvider>(context, listen: false)
                                                       .currentUser
                                                       .uid)
-                                              ? "-2"
-                                              : "+1",
+                                              ? "-1"
+                                              : "+2",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
@@ -259,52 +259,57 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 )),
-                                Column(children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                                content: Text(
-                                                  '¿Estas seguro de que quieres marcar este favor como completado?',
-                                                ),
-                                                actions: [
-                                                  MaterialButton(
-                                                      onPressed: () {
-                                                        Provider.of<FavoresProvider>(context,
-                                                                listen: false)
-                                                            .confirmarFavorEnProceso(
-                                                                Provider.of<AuthProvider>(context,
-                                                                        listen: false)
-                                                                    .currentUser);
-                                                      },
-                                                      child: Text('Sí')),
-                                                  MaterialButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                      child: Text('No')),
-                                                ]);
-                                          },
-                                        );
-                                      },
-                                      tooltip: 'Completar',
-                                      icon: Icon(
-                                        Icons.done_outline,
-                                        size: 30.0,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) => ChatScreen()));
-                                      },
-                                      tooltip: 'Chat',
-                                      icon: Icon(
-                                        Icons.chat_outlined,
-                                        size: 30.0,
-                                      )),
-                                ])
+                                favor.estado == "Asignado"
+                                    ? Column(children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                      content: Text(
+                                                        '¿Estas seguro de que quieres marcar este favor como completado?',
+                                                      ),
+                                                      actions: [
+                                                        MaterialButton(
+                                                            onPressed: () {
+                                                              Provider.of<FavoresProvider>(context,
+                                                                      listen: false)
+                                                                  .confirmarFavorEnProceso(
+                                                                      Provider.of<AuthProvider>(
+                                                                              context,
+                                                                              listen: false)
+                                                                          .currentUser);
+                                                            },
+                                                            child: Text('Sí')),
+                                                        MaterialButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                            child: Text('No')),
+                                                      ]);
+                                                },
+                                              );
+                                            },
+                                            tooltip: 'Completar',
+                                            icon: Icon(
+                                              Icons.done_outline,
+                                              size: 30.0,
+                                            )),
+                                        IconButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => ChatScreen()));
+                                            },
+                                            tooltip: 'Chat',
+                                            icon: Icon(
+                                              Icons.chat_outlined,
+                                              size: 30.0,
+                                            )),
+                                      ])
+                                    : Text('')
                               ])
                             ])
                           ]));

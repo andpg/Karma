@@ -85,13 +85,13 @@ class FavoresProvider extends ChangeNotifier {
 
         db.child("users").child(favorEnProceso.user.uid).once().then((data) {
           User user = User(Map.from(data.value));
-          user.karma = user.karma - 2;
+          user.karma = user.karma - 1;
           db.child("users").child(user.uid).update(user.toJson());
         });
 
         db.child("users").child(favorEnProceso.userAsignado.uid).once().then((data) {
           User userAsignado = User(Map.from(data.value));
-          userAsignado.karma = userAsignado.karma + 1;
+          userAsignado.karma = userAsignado.karma + 2;
           db.child("users").child(userAsignado.uid).update(userAsignado.toJson());
         });
       } else {
