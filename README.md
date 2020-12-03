@@ -3,7 +3,7 @@
 A continuacion se presentan los documentos:<br>
 
 VIDEO DEMO DE LA APP<br>
-[![Pantalla](https://img.youtube.com/vi/7OvbeP6paL0/0.jpg)](https://youtu.be/7OvbeP6paL0)
+[![Pantalla](https://img.youtube.com/vi/OqL3mjV9Tf4/0.jpg)](https://youtu.be/OqL3mjV9Tf4)
 
 VIDEO CORRIENDO EL CODIGO CON ENFASIS EN LA ESTRUCTURA<br>
 [![Pantalla](https://img.youtube.com/vi/7OvbeP6paL0/0.jpg)](https://youtu.be/7OvbeP6paL0)
